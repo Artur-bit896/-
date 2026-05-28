@@ -1,6 +1,5 @@
-from sqlalchemy.orm import Session
-
 from app import models, schemas
+from sqlalchemy.orm import Session
 
 
 def create_book(db: Session, book: schemas.BookCreate):
