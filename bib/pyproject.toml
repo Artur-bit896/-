@@ -2,11 +2,9 @@
 line-length = 88
 target-version = "py311"
 
-# какие правила проверять
 [tool.ruff.lint]
 select = ["E", "F", "I", "B"]
+ignore = ["B008"]
 
-# E = style errors (pep8)
-# F = логические ошибки (pyflakes)
-# I = imports
-# B = потенциальные баги
+[tool.ruff.format]
+quote-style = "double"

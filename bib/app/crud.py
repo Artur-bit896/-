@@ -1,51 +1,48 @@
 from sqlalchemy.orm import Session
+
 from app import models, schemas
 
 
 def create_book(db: Session, book: schemas.BookCreate):
-    db_book = models.Book(
-        title=book.title,
-        author=book.author
-    )
+    db_book = models.Book(title=book.title, author=book.author)
 
-    db.add(db_book) # Добавляем в Session
-    db.commit() # Cохраняем объект
-    db.refresh(db_book) # обновляем объект
-    
+    db.add(db_book)  # Добавляем в Session
+    db.commit()  # Cохраняем объект
+    db.refresh(db_book)  # обновляем объект
+
     return db_book
-   
-    
-    
+
+
 def get_books(db: Session):
     return db.query(models.Book).all()
 
 
-
 def update_book(db: Session, book_id: int, updated_book: schemas.BookCreate):
-    book = db.query(models.Book).filter(models.Book.id == book_id).first() # first возвращает первый объект или ничего а не все как all 
-    
+    book = (
+        db.query(models.Book).filter(models.Book.id == book_id).first()
+    )  # first возвращает первый объект или ничего а не все как all
+
     if not book:
         return None
-    
-    book.title = update_book.title
-    book.author = update_book.author
-    
+
+    book.title = updated_book.title
+    book.author = updated_book.author
+
     db.commit()
     db.refresh(book)
-    
+
     return book
 
 
-
 def delete_book(db: Session, book_id: int):
-    book = db.query(models.Book).filter(models.Book.id == book_id).first() # first возвращает первый объект или ничего а не все как all 
-    
+    book = (
+        db.query(models.Book).filter(models.Book.id == book_id).first()
+    )  # first возвращает первый объект или ничего а не все как all
+
     if not book:
         return None
-    
+
     db.delete(book)
     db.commit()
-    
-    return f"This book is deleted"
-    
-    
+
+    return "This book is deleted"
