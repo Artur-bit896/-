@@ -16,6 +16,10 @@ def get_books(db: Session):
     return db.query(models.Book).all()
 
 
+def get_book(db: Session, book_id):
+    return db.query(models.Book).filter(models.Book.id == book_id).first() # .first нужен чтобы запрос отправился в бд
+
+
 def update_book(db: Session, book_id: int, updated_book: schemas.BookCreate):
     book = (
         db.query(models.Book).filter(models.Book.id == book_id).first()
@@ -45,3 +49,4 @@ def delete_book(db: Session, book_id: int):
     db.commit()
 
     return "This book is deleted"
+
